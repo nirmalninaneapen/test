@@ -1,0 +1,11 @@
+venv/
+_ref/
+media/
+.idea/
+env/
+*.pyc
+__pycache__
+*.swo
+*.swp
+*.swn
+logs/

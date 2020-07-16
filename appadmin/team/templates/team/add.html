@@ -1,0 +1,116 @@
+{% extends 'team/base.html' %}
+{% block content %}
+{% load branchfilter i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+
+<!-- Content Header (Page header) -->
+<div class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1 class="m-0 text-dark">{% trans 'Register Team' %}</h1>
+      </div><!-- /.col -->
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item"><a href="">{% trans 'Home' %}</a></li>
+          <li class="breadcrumb-item active">{% trans 'Register Team' %}</li>
+        </ol>
+      </div><!-- /.col -->
+    </div><!-- /.row -->
+  </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <!-- general form elements disabled -->
+        <div class="card card-warning">
+          <form role="form" action="{% url 'teamadd' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="card-header" style="background-color: #005825">
+              <h3 class="card-title" style="color: #fff">{% trans 'Register Team' %}</h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+
+              <div class="row">
+
+                  <div class="col-sm-10">
+                    <div class="form-group">
+                      <label>{% trans 'Name your Team' %} </label>
+                       <div>
+                      <input type="text" class="form-control" style="margin-bottom:20px" name="name" value="" placeholder="{% trans 'Enter Team Name' %}" required>
+                      </div>
+                    </div>
+                  </div>
+
+              </div>
+
+              <div class="row">
+
+                  <div class="col-sm-10">
+                    <div class="form-group input_fields_container">
+                      <label>{% trans 'Add Team Member' %} </label>
+                       <div>
+                      <input type="text" class="form-control" style="margin-bottom:20px" name="members" value="" placeholder="{% trans 'Enter Member Name' %}" required>
+                      </div>
+                       <div>
+                      <input type="text" class="form-control " name="members" style="margin-bottom:20px" value="" placeholder="{% trans 'Enter Member Name' %}" required>
+                      </div>
+                       <div>
+                      <input type="text" class="form-control " name="members" style="margin-bottom:20px" value="" placeholder="{% trans 'Enter Member Name' %}" required>
+                      </div>
+                      <div>
+                      <input type="text" class="form-control " name="members" value="" placeholder="{% trans 'Enter Member Name' %}" required>
+                        <a href="#" class=" add_more_button" style="margin-left:10px;">Add More Members(+)</a>
+                      </div>
+                    </div>
+                  </div>
+
+              </div>
+
+              <div class="row">
+
+                  <div class="col-sm-10">
+                    <div class="form-group">
+                      <label>{% trans 'Add A Coach' %} </label>
+                       <div>
+                      <input type="text" class="form-control mb-10" style="margin-bottom:20px" name="coach" value="" placeholder="{% trans 'Enter Coach Name' %}" required>
+                      </div>
+                    </div>
+                  </div>
+
+              </div>
+
+                <div class="row">
+
+                  <div class="col-sm-10">
+                    <div class="form-group">
+                      <label>{% trans 'Add A Manager' %} </label>
+                       <div>
+                      <input type="text" class="form-control mb-10" style="margin-bottom:20px" name="manager" value="" placeholder="{% trans 'Enter Manager Name' %}" required>
+                      </div>
+                    </div>
+                  </div>
+
+              </div>
+
+
+            </div>
+            <!-- /.card-body -->
+            <div class="card-footer">
+              <button type="submit" class="btn btn-primary">{% trans 'Submit' %}</button>
+            </div>
+
+          </form>
+        </div>
+        <!-- /.card -->
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
+

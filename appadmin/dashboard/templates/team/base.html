@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+   {% load static %} {% load startswith addOffset %} {% load i18n %}
+   {% get_current_language as LANGUAGE_CODE %}
+
+  <title>FootballApp | Register your Team </title>
+
+  <!-- Font Awesome Icons -->
+   <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css' %}">
+  <!-- IonIcons -->
+  <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{% static 'plugins/toastr/toastr.min.css' %}">
+  <link rel="stylesheet" href="{% static 'dist/css/adminlte.min.css' %}">
+  <!-- Google Font: Source Sans Pro -->
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'dist/css/additional.css' %}">
+  <style>
+  .login-page{
+        background:url("{% static 'dist/img/football.jpg' %}") no-repeat center center;
+        background-size:cover;
+        min-height:100vh;
+   }
+  </style>
+</head>
+<!--
+BODY TAG OPTIONS:
+=================
+Apply one or more of the following classes to to the body tag
+to get the desired effect
+|---------------------------------------------------------|
+|LAYOUT OPTIONS | sidebar-collapse                        |
+|               | sidebar-mini                            |
+|---------------------------------------------------------|
+-->
+<body class="hold-transition sidebar-collapse">
+<div class="wrapper">
+
+  <div class="content-wrapper">
+      {% block content %}
+      {% endblock %}
+  </div>
+
+  <!-- Main Footer -->
+  <footer class="main-footer">
+    <strong>Copyright &copy; 2020 <a href=""></a>.</strong>
+    All rights reserved.
+  </footer>
+</div>
+<!-- ./wrapper -->
+
+<!-- REQUIRED SCRIPTS -->
+
+<!-- jQuery -->
+<script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
+<!-- Bootstrap -->
+<script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'plugins/toastr/toastr.min.js' %}"></script>
+{% if messages %}
+{% for message in messages %}
+    {% if message.tags == 'success'%}
+        <script type=text/javascript>toastr.{{ message.tags }}('{{ message }}')</script>
+    {% elif message.tags == 'info' %}
+        <script type=text/javascript>toastr.{{ message.tags }}('{{ message }}')</script>
+    {% elif message.tags == 'warning' %}
+        <script type=text/javascript>toastr.{{ message.tags }}('{{ message }}')</script>
+    {% elif message.tags == 'error' %}
+        <script type=text/javascript>toastr.{{ message.tags }}('{{ message }}')</script>
+    {% endif %}
+{% endfor %}
+{% endif %}
+<!-- AdminLTE -->
+<script src="{% static 'dist/js/adminlte.js' %}"></script>
+
+<!-- OPTIONAL SCRIPTS -->
+<script src="{% static 'plugins/chart.js/Chart.min.js' %}"></script>
+<script src="{% static 'dist/js/demo.js' %}"></script>
+{% if retData %}
+<script>
+  var ticksStyle = {
+    fontColor: '#495057',
+    fontStyle: 'bold'
+  };
+  var mode      = 'index';
+  var intersect = true
+  var $visitorsChart = $('#visitors-chart');
+  var visitorsChart  = new Chart($visitorsChart, {
+    data   : {
+      labels  : {{ retData.chart.x|safe }},
+      datasets: [{
+        type                : 'line',
+        data                : {{ retData.chart.y|safe }},
+        backgroundColor     : 'transparent',
+        borderColor         : '#007bff',
+        pointBorderColor    : '#007bff',
+        pointBackgroundColor: '#007bff',
+        fill                : false,
+        // pointHoverBackgroundColor: '#007bff',
+        // pointHoverBorderColor    : '#007bff'
+      }]
+    },
+    options: {
+      maintainAspectRatio: false,
+      tooltips           : {
+        mode     : mode,
+        intersect: intersect
+      },
+      hover              : {
+        mode     : mode,
+        intersect: intersect
+      },
+      legend             : {
+        display: false
+      },
+      scales             : {
+        yAxes: [{
+          // display: false,
+          gridLines: {
+            display      : true,
+            lineWidth    : '4px',
+            color        : 'rgba(0, 0, 0, .2)',
+            zeroLineColor: 'transparent'
+          },
+          ticks    : $.extend({
+            beginAtZero : true,
+            suggestedMax: 3,
+            stepSize: 1
+          }, ticksStyle)
+        }],
+        xAxes: [{
+          display  : true,
+          gridLines: {
+            display: false
+          },
+          ticks    : ticksStyle
+        }]
+      }
+    }
+  })
+</script>
+{% endif %}
+<script src="{% static 'dist/js/pages/dashboard3.js' %}"></script>
+<script>
+    $(document).ready(function() {
+    var max_fields_limit      = 20;
+    var x = 1;
+    $('.add_more_button').click(function(e){
+        e.preventDefault();
+        if(x < max_fields_limit){
+            x++;
+            $('.input_fields_container').append('<div><input class="form-control" type="text" name="members" placeholder="{% trans 'Enter Member Name' %}" required/><a href="#" class="remove_field" style="margin-left:10px;">Remove</a></div>');
+        }
+    });
+    $('.input_fields_container').on("click",".remove_field", function(e){
+        e.preventDefault();
+        $(this).parent('div').remove();
+        x--;
+    })
+});
+</script>
+<script src="{% static 'dist/js/additional.js' %}"></script>
+</body>
+</html>

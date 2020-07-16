@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>FoodApp | Log in</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+   {% load static %}
+    {% load i18n %}
+   {% get_current_language as LANGUAGE_CODE %}
+  <!-- Font Awesome -->
+   <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css' %}">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- icheck bootstrap -->
+  <link rel="stylesheet" href="{% static 'plugins/icheck-bootstrap/icheck-bootstrap.min.css' %}">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{% static 'plugins/toastr/toastr.min.css' %}">
+  <link rel="stylesheet" href="{% static 'dist/css/adminlte.min.css' %}">
+  <!-- Google Font: Source Sans Pro -->
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'dist/css/additional.css' %}">
+   <style>
+  .login-page{
+        background:url("{% static 'dist/img/bg.jpg' %}") no-repeat center center;
+        background-size:cover;
+        min-height:100vh;
+   }
+  </style>
+</head>
+<body class="hold-transition login-page">
+<div class="login-box">
+  <div class="login-logo">
+    <a href=""><img src="{% static 'dist/img/malabar.png' %}" width="100" height="100"></a>
+  </div>
+  <!-- /.login-logo -->
+  <div class="card">
+    <div class="card-body login-card-body">
+        <div class="row">
+            <p style="font-size: 18px;padding: 22px" class="login-box-msg">Hi {{ customer.firstname }} {{ customer.lastname }},your account is now verified!</p>
+
+        </div>
+      <form action="{% url 'customerresetpassword' %}" method="post">
+        {% csrf_token %}
+
+        <div class="row">
+          <div class="col-4" style="margin: auto;width: 50%;padding: 10px;">
+            <i class="fas fa-calendar-check" style="font-size:120px;color:#46A049"></i>
+          </div>
+        </div>
+
+        {% if form.non_field_errors %}
+        <div class="alert alert-warning alert-dismissible">
+            <h5><i class="icon fas fa-exclamation-triangle"></i> Alert!</h5>
+            {{ form.non_field_errors }}
+        </div>
+        {% endif %}
+      </form>
+
+
+
+
+    </div>
+    <!-- /.login-card-body -->
+  </div>
+</div>
+<!-- /.login-box -->
+
+<!-- jQuery -->
+<script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
+<!-- Bootstrap 4 -->
+<script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'plugins/toastr/toastr.min.js' %}"></script>
+{% if messages %}
+{% for message in messages %}
+    {% if message.tags == 'success'%}
+        <script type=text/javascript>toastr.{{ message.tags }}('{{ message }}')</script>
+    {% elif message.tags == 'info' %}
+        <script type=text/javascript>toastr.{{ message.tags }}('{{ message }}')</script>
+    {% elif message.tags == 'warning' %}
+        <script type=text/javascript>toastr.{{ message.tags }}('{{ message }}')</script>
+    {% elif message.tags == 'error' %}
+        <script type=text/javascript>toastr.{{ message.tags }}('{{ message }}')</script>
+    {% endif %}
+{% endfor %}
+{% endif %}
+<!-- AdminLTE App -->
+<script src="{% static 'dist/js/adminlte.js' %}"></script>
+
+</body>
+</html>

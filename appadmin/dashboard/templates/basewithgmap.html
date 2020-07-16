@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+   {% load static %} {% load startswith dateFormat i18n %}
+   {% get_current_language as LANGUAGE_CODE %}
+
+
+  <title>FoodApp | {% trans 'Dashboard' %} </title>
+
+  <!-- Font Awesome Icons -->
+   <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css' %}">
+  <!-- IonIcons -->
+  <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <link rel="stylesheet" href="{% static 'plugins/daterangepicker/daterangepicker.css' %}">
+  <link rel="stylesheet" href="{% static 'plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css' %}">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{% static 'plugins/toastr/toastr.min.css' %}">
+  <link rel="stylesheet" href="{% static 'dist/css/adminlte.min.css' %}">
+  <!-- Google Font: Source Sans Pro -->
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'dist/css/additional.css' %}">
+</head>
+<!--
+BODY TAG OPTIONS:
+=================
+Apply one or more of the following classes to to the body tag
+to get the desired effect
+|---------------------------------------------------------|
+|LAYOUT OPTIONS | sidebar-collapse                        |
+|               | sidebar-mini                            |
+|---------------------------------------------------------|
+-->
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+  <!-- Navbar -->
+  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+    <!-- Left navbar links -->
+    <!-- <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
+      </li>
+      <li class="nav-item d-none d-sm-inline-block">
+        <a href="index3.html" class="nav-link">{% trans 'Home' %}</a>
+      </li>
+      <li class="nav-item d-none d-sm-inline-block">
+        <a href="#" class="nav-link">{% trans 'Contact' %}</a>
+      </li>
+    </ul> -->
+
+    <!-- SEARCH FORM -->
+    <!-- <form class="form-inline ml-3">
+      <div class="input-group input-group-sm">
+        <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+        <div class="input-group-append">
+          <button class="btn btn-navbar" type="submit">
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+      </div>
+    </form> -->
+
+    <!-- Right navbar links -->
+    <ul class="navbar-nav ml-auto">
+      <!-- Notifications Dropdown Menu -->
+     <li class="nav-item dropdown">
+        <a class="nav-link" data-toggle="dropdown" href="#">
+          <i class="fa fa-language" aria-hidden="true"></i>
+          <span class="badge badge-warning navbar-badge">{{LANGUAGE_CODE}}</span>
+        </a>
+        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+          <span class="dropdown-item dropdown-header">Select Language</span>
+          <div class="dropdown-divider"></div>
+          <a href="{% url 'adminupdatelanguage' 'en' %}?next={{request.path}}" class="dropdown-item">
+            <i class="fas fa-globe mr-2"></i> English
+            <span class="float-right text-muted text-sm">Select for English</span>
+          </a>
+          <div class="dropdown-divider"></div>
+          <a href="{% url 'adminupdatelanguage' 'ar' %}?next={{request.path}}" class="dropdown-item">
+            <i class="fas fa-map-marked-alt"></i> Arabic
+            <span class="float-right text-muted text-sm">اختر اللغة العربية</span>
+          </a>
+        </div>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link" href="{% url 'adminlogout' %}">
+           <i class="fas fa-sign-out-alt"></i>
+        </a>
+      </li>
+    </ul>
+  </nav>
+  <!-- /.navbar -->
+
+  <!-- Main Sidebar Container -->
+  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="{% url 'admindashboard' %}" class="brand-link">
+      <img src="{% static 'dist/img/AdminLTELogo.png' %}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+           style="opacity: .8">
+      <span class="brand-text font-weight-light">Food App</span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <!-- Sidebar user panel (optional) -->
+      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <div class="image">
+          <img src="{% static 'dist/img/avatar5.png' %}" class="img-circle elevation-2" alt="User Image">
+        </div>
+        <div class="info">
+          <a href="#" class="d-block">{{ user.username }}</a>
+        </div>
+      </div>
+
+      <!-- Sidebar Menu -->
+      <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+
+           <li class="nav-item">
+              <a href="{% url 'adminlistbranch' %}" class="nav-link
+               {% if request.path|startswith:'/app-admin/admin/branch/' %} active {% endif %}">
+                <i class="nav-icon fas fa-store"></i>
+                <p>
+                  {% trans 'Branches' %}
+                </p>
+              </a>
+            </li>
+
+           <li class="nav-item">
+              <a href="{% url 'adminlistfooditem' %}" class="nav-link
+              {% if request.path|startswith:'/app-admin/admin/fooditem' %} active {% endif %}">
+                <i class="nav-icon fas fa-cookie-bite"></i>
+                <p>
+                  {% trans 'Food Items' %}
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+            <a href="{% url 'adminlistcoupon' %}" class="nav-link
+            {% if request.path|startswith:'/app-admin/admin/coupon' %} active {% endif %}">
+              <i class="nav-icon fa fa-gift"></i>
+              <p>
+                {% trans 'Coupons' %}
+              </p>
+            </a>
+          </li>
+           <li class="nav-item">
+            <a href="{% url 'adminlistoffer' %}" class="nav-link
+            {% if request.path|startswith:'/app-admin/admin/offer' %} active {% endif %}">
+              <i class="nav-icon fa fa-gift"></i>
+              <p>
+                {% trans 'Offers' %}
+              </p>
+            </a>
+          </li>
+
+            <li class="nav-item">
+            <a href="{% url 'adminlistbranchuser' %}" class="nav-link
+            {% if request.path|startswith:'/app-admin/admin/branchuser' %} active {% endif %}">
+              <i class="nav-icon fas fa-users"></i>
+              <p>
+                {% trans 'Branch Users' %}
+              </p>
+            </a>
+          </li>
+
+             <li class="nav-item">
+              <a href="{% url 'adminlistcustomer' %}" class="nav-link
+              {% if request.path|startswith:'/app-admin/admin/customer' %} active {% endif %}">
+                <i class="nav-icon fas fa-person-booth"></i>
+                <p>
+                  {% trans 'Customers' %}
+                </p>
+              </a>
+            </li>
+
+           <li class="nav-item">
+              <a href="{% url 'adminlistcategory' %}" class="nav-link
+              {% if request.path|startswith:'/app-admin/admin/category' %} active {% endif %}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  {% trans 'Food Item Categories' %}
+                </p>
+              </a>
+            </li>
+
+              <li class="nav-item">
+              <a href="{% url 'adminlistorder' %}" class="nav-link
+               {% if request.path|startswith:'/app-admin/branch/order' %} active {% endif %}">
+                <i class="nav-icon fas fa-file-invoice"></i>
+                <p>
+                  {% trans 'Orders' %}
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'adminlistdeliveryboys' %}" class="nav-link
+               {% if request.path|startswith:'/app-admin/admin/deliveryboys' %} active {% endif %}">
+                    <i class="nav-icon fas fa-person-booth"></i>
+                    <p>
+                        {% trans 'Delivery Boys' %}
+                    </p>
+                </a>
+            </li>
+
+              <li class="nav-item has-treeview {% if request.path|startswith:'/app-admin/admin/page/edit' %}menu-open{% endif %}">
+            <a href="" class="nav-link">
+              <i class="nav-icon fas fa-table"></i>
+              <p>
+                {% trans 'Page Contents' %}
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview" style="{% if request.path|startswith:'/app-admin/admin/page/edit' %}display:block{% else %}display:none{% endif %}">
+              <li class="nav-item">
+                <a href="{% url 'admineditpage'  1 %}" class="nav-link
+                  {% if request.path|startswith:'/app-admin/admin/page/edit/1' %} active {% endif %}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>{% trans 'About Us' %}</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{% url 'admineditpage' 2 %}" class="nav-link
+                    {% if request.path|startswith:'/app-admin/admin/page/edit/2' %} active {% endif %}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>{% trans 'Privacy Policy' %}</p>
+                </a>
+              </li>
+               <li class="nav-item">
+                <a href="{% url 'admineditpage' 3 %}" class="nav-link
+                  {% if request.path|startswith:'/app-admin/admin/page/edit/3' %} active {% endif %}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>{% trans 'Customer Support' %}</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+        </ul>
+      </nav>
+      <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+  </aside>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+      {% block content %}
+      {% endblock %}
+  </div>
+  <!-- /.content-wrapper -->
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+
+  <!-- Main Footer -->
+  <footer class="main-footer">
+    <strong>Copyright &copy; 2020 </strong>
+    All rights reserved.
+    <div class="float-right d-none d-sm-inline-block">
+
+    </div>
+  </footer>
+</div>
+
+<!-- ./wrapper -->
+
+<!-- REQUIRED SCRIPTS -->
+
+<!-- jQuery -->
+<script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
+
+<!-- Bootstrap -->
+<script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'plugins/toastr/toastr.min.js' %}"></script>
+{% if messages %}
+{% for message in messages %}
+    {% if message.tags == 'success'%}
+        <script type=text/javascript>toastr.{{ message.tags }}('{{ message }}')</script>
+    {% elif message.tags == 'info' %}
+        <script type=text/javascript>toastr.{{ message.tags }}('{{ message }}')</script>
+    {% elif message.tags == 'warning' %}
+        <script type=text/javascript>toastr.{{ message.tags }}('{{ message }}')</script>
+    {% elif message.tags == 'error' %}
+        <script type=text/javascript>toastr.{{ message.tags }}('{{ message }}')</script>
+    {% endif %}
+{% endfor %}
+{% endif %}
+<script src="{% static 'plugins/moment/moment.min.js' %}"></script>
+<script src="{% static 'plugins/daterangepicker/daterangepicker.js' %}"></script>
+<script src="{% static 'plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js' %}"></script>
+<!-- AdminLTE -->
+<script src="{% static 'dist/js/adminlte.js' %}"></script>
+<script>
+$(function () {
+    $('#reservation').daterangepicker();
+    $('#datepicker').datetimepicker({
+       format: 'DD/MM/YYYY'
+     })
+})
+</script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDN1q8qstULUmFY37nl3JbLvwrIlxyNZlw&sensor=false&language=en&libraries=places"></script>
+<script>
+var map;
+var marker;
+{% if branch %}
+var myLatlng = new google.maps.LatLng({{ branch.lat|default_if_none:25.286106 }},{{ branch.long|default_if_none:51.534817 }});
+{% else %}
+var myLatlng = new google.maps.LatLng(25.286106,51.534817);
+{% endif %}
+var geocoder = new google.maps.Geocoder();
+var infowindow = new google.maps.InfoWindow();
+
+function initialize(){
+    var mapOptions = {
+        zoom: 10,
+        center: myLatlng,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    map = new google.maps.Map(document.getElementById("myMap"), mapOptions);
+    marker = new google.maps.Marker({
+    map: map,
+    position: myLatlng,
+    draggable: true
+    });
+    geocoder.geocode({'latLng': myLatlng }, function(results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+            if (results[0]) {
+            $('#latitude,#longitude').show();
+                $('#address').val(results[0].formatted_address);
+                $('#latitude').val(marker.getPosition().lat());
+                $('#longitude').val(marker.getPosition().lng());
+                infowindow.setContent(results[0].formatted_address);
+                infowindow.open(map, marker);
+            }
+        }
+    });
+    google.maps.event.addListener(marker, 'dragend', function() {
+        geocoder.geocode({'latLng': marker.getPosition()}, function(results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                if (results[0]) {
+                    $('#address').val(results[0].formatted_address);
+                    $('#latitude').val(marker.getPosition().lat());
+                    $('#longitude').val(marker.getPosition().lng());
+                    infowindow.setContent(results[0].formatted_address);
+                    infowindow.open(map, marker);
+                }
+            }
+        });
+    });
+}
+
+google.maps.event.addDomListener(window, 'load', initialize);
+</script>
+<!-- OPTIONAL SCRIPTS -->
+<script src="{% static 'plugins/chart.js/Chart.min.js' %}"></script>
+<script src="{% static 'dist/js/demo.js' %}"></script>
+<script src="{% static 'dist/js/pages/dashboard3.js' %}"></script>
+<script src="{% static 'dist/js/additional.js' %}"></script>
+</body>
+</html>

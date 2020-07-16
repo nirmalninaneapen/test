@@ -1,0 +1,116 @@
+{% extends 'team/base.html' %}
+{% block content %}   {% load getQuantity i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+<!-- Content Header (Page header) -->
+<div class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-4">
+        <h1 class="m-0 text-dark"> {% trans 'Proposed Match Fixture' %} </h1>
+      </div><!-- /.col -->
+      <div class="col-sm-4">
+
+      </div>
+      <div class="col-sm-4">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item"><a href="{% url 'admindashboard' %}">{% trans 'Home' %}</a></li>
+          <li class="breadcrumb-item active">{% trans 'Food Item' %}</li>
+        </ol>
+      </div><!-- /.col -->
+    </div><!-- /.row -->
+  </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+
+<!-- Main content -->
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <!-- general form elements disabled -->
+          <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">{% trans 'Listing Menus for this Branch' %}...</h3>
+          </div>
+          <!-- /.card-header -->
+          <div class="card-body">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>{% trans 'Match Date' %}</th>
+                  <th>{% trans 'Opponents' %}</th>
+                  <th>{% trans 'Venue' %}</th>
+                  <th>{% trans 'Time' %}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for fixture in fixtures %}
+                <tr>
+                  <td>{{ fixture.date }}</td>
+                  <td>{{ fixture.match1.0 }}   Vs   {{ fixture.match1.1 }}</td>
+                  <td>{{ fixture.venue1 }}</td>
+                  <td>10AM Session</td>
+                </tr>
+                <tr>
+                  <td>{{ fixture.date }}</td>
+                  <td>{{ fixture.match2.0 }}   Vs   {{ fixture.match2.1 }}</td>
+                  <td>{{ fixture.venue2 }}</td>
+                  <td>4PM Session</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          <!-- /.card-body -->
+          <div class="card-footer clearfix">
+            Page {{ menus.number }} of {{ menus.paginator.num_pages }}.
+            <ul class="pagination pagination-sm m-0 float-right">
+              {% if menus.has_previous %}
+                  <li class="page-item"><a class="page-link" href="?page={{ menus.previous_page_number }}">&laquo;</a></li>
+              {% endif %}
+
+              {% for i in menus.paginator.page_range %}
+                 {% if menus.number == i %}
+                  <li class="page-item active"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                  {% else %}
+                  <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                  {% endif %}
+              {% endfor %}
+
+              {% if menus.has_next %}
+              <li class="page-item"><a class="page-link" href="?page={{ menus.next_page_number }}">&raquo;</a></li>
+              {% endif %}
+            </ul>
+          </div>
+        </div>
+        <!-- /.card -->
+      </div>
+    </div>
+  </div>
+</section>
+<!-- /.content -->
+
+ <div class="modal fade" id="modal-warning">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content bg-warning">
+        <div class="modal-header">
+          <h4 class="modal-title">Sure?</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body">
+          <p id="modalPara">Are you sure of removing this branch?</p>
+        </div>
+        <div class="modal-footer justify-content-between">
+          <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-outline-dark"><a class="modalLink" href="">Proceed</a></button>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+  <!-- /.modal -->
+
+
+{% endblock %}

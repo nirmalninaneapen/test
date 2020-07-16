@@ -1,0 +1,59 @@
+#img-prev{
+    display:none;
+    width:100%;
+}
+#img-prev-edit{
+    width:100%;
+}
+
+#map-canvas
+{
+height: 400px;
+width: 500px;
+}
+
+#myMap {
+   height: 350px;
+   width: 680px;
+}
+
+.user-block img {
+    height: 150px;
+    width: 150px;
+ }
+ .img-circle {
+    border-radius: initial;
+}
+.user-block .username {
+    margin-left:175px;
+}
+.user-block .description {
+    margin-left:175px;
+}
+.strikeout {
+    text-decoration: line-through;
+}
+.mb25{
+    margin-bottom:25px;
+}
+
+.login-logo a, .register-logo a {
+    color: #f7a769;
+    font-weight:400;
+}
+
+.checked {
+  color: orange;
+}
+
+.stardiv {
+  margin-left: 175px;
+}
+.sidebar-dark-primary .nav-sidebar > .nav-item > .nav-link.active{
+
+  background-color: #005825 !important;
+}
+.greenlogin{
+  background-color: #005825 !important;
+  border-color: #005825 !important;
+}

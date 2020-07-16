@@ -1,0 +1,60 @@
+{% extends 'team/base.html' %}
+{% block content %}
+
+<!-- Content Header (Page header) -->
+<div class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1 class="m-0 text-dark">Squad for {{team.name}}</h1>
+      </div><!-- /.col -->
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item"><a href="{% url 'admindashboard' %}">Home</a></li>
+          <li class="breadcrumb-item active">Squad for team</li>
+        </ol>
+      </div><!-- /.col -->
+    </div><!-- /.row -->
+  </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <!-- general form elements disabled -->
+        <div class="card card-warning">
+          <form role="form" action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="card-header" style="background-color: #005825">
+              <h3 class="card-title" style="color: #fff">Squad for team</h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+              <div class="row">
+                <div class="col-sm-6">
+                  <!-- text input -->
+                  <div class="form-group">
+                    <label>Team squad</label>
+                      <ul>
+                          {% for member in members %}
+                          <li>{{member.name}}</li>
+                          {% endfor %}
+                      </ul>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <!-- /.card-body -->
+          </form>
+        </div>
+        <!-- /.card -->
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
+
